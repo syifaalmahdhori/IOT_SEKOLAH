@@ -21,7 +21,15 @@
   <div class="header-content">
     <img src="logo_ss.png" alt="Logo" class="logo" />
     <div class="title">Realtime Sensor</div>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">☰</button>
+    <button 
+      class="hamburger" 
+      id="hamburger" 
+      aria-label="Toggle menu" 
+      aria-controls="navLinks" 
+      aria-expanded="false"
+    >
+      ☰
+    </button>
     <nav class="nav-links" id="navLinks">
       <a href="index.html">Realtime</a>
       <a href="grafik.html" class="active">Grafik</a>
@@ -38,58 +46,74 @@
 </div>
 
 <script>
-  // Data dummy 10 terakhir
-  const dummyData = [
-    { waktu: "14:00", suhu: 27.5, kelembaban: 65, cahaya: 80 },
-    { waktu: "14:01", suhu: 27.6, kelembaban: 64, cahaya: 79 },
-    { waktu: "14:02", suhu: 27.8, kelembaban: 63, cahaya: 78 },
-    { waktu: "14:03", suhu: 27.9, kelembaban: 62, cahaya: 77 },
-    { waktu: "14:04", suhu: 28.0, kelembaban: 61, cahaya: 76 },
-    { waktu: "14:05", suhu: 28.2, kelembaban: 60, cahaya: 75 },
-    { waktu: "14:06", suhu: 28.3, kelembaban: 59, cahaya: 74 },
-    { waktu: "14:07", suhu: 28.4, kelembaban: 58, cahaya: 73 },
-    { waktu: "14:08", suhu: 28.5, kelembaban: 57, cahaya: 72 },
-    { waktu: "14:09", suhu: 28.6, kelembaban: 56, cahaya: 71 }
-  ];
+// Simulasi data dummy untuk tampilan tanpa PHP
+let dummyData = [
+  { waktu: "14:00:00", suhu: 27.2, kelembaban: 64, cahaya: 80 },
+  { waktu: "14:00:01", suhu: 27.3, kelembaban: 63, cahaya: 81 },
+  { waktu: "14:00:02", suhu: 27.5, kelembaban: 62, cahaya: 83 },
+  { waktu: "14:00:03", suhu: 27.6, kelembaban: 61, cahaya: 84 },
+  { waktu: "14:00:04", suhu: 27.7, kelembaban: 60, cahaya: 85 }
+];
 
+let chart;
+
+function updateChart() {
   const labels = dummyData.map(d => d.waktu);
   const suhu = dummyData.map(d => d.suhu);
   const kelembaban = dummyData.map(d => d.kelembaban);
   const cahaya = dummyData.map(d => d.cahaya);
 
-  const ctx = document.getElementById('sensorChart').getContext('2d');
-  const chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [
-        { label: 'Suhu (°C)', data: suhu, borderColor: 'red', fill: false, tension: 0.1 },
-        { label: 'Kelembaban (%)', data: kelembaban, borderColor: 'green', fill: false, tension: 0.1 },
-        { label: 'Cahaya (%)', data: cahaya, borderColor: 'blue', fill: false, tension: 0.1 }
-      ]
-    },
-    options: {
-      responsive: true,
-      animation: false,
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Waktu'
-          }
-        },
-        y: {
-          beginAtZero: true
+  if (chart) {
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = suhu;
+    chart.data.datasets[1].data = kelembaban;
+    chart.data.datasets[2].data = cahaya;
+    chart.update();
+  } else {
+    const ctx = document.getElementById('sensorChart').getContext('2d');
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          { label: 'Suhu (°C)', data: suhu, borderColor: 'red', fill: false, tension: 0.1 },
+          { label: 'Kelembaban (%)', data: kelembaban, borderColor: 'green', fill: false, tension: 0.1 },
+          { label: 'Cahaya (%)', data: cahaya, borderColor: 'blue', fill: false, tension: 0.1 }
+        ]
+      },
+      options: {
+        responsive: true,
+        animation: false,
+        scales: {
+          x: { title: { display: true, text: 'Waktu' } },
+          y: { beginAtZero: true }
         }
       }
-    }
-  });
+    });
+  }
+}
+
+// Simulasi data bertambah setiap detik
+function simulateRealtime() {
+  const now = new Date();
+  const waktu = now.toTimeString().split(' ')[0];
+  const suhu = (27 + Math.random()).toFixed(1);
+  const kelembaban = (60 + Math.random() * 5).toFixed(1);
+  const cahaya = (80 + Math.random() * 5).toFixed(1);
+
+  dummyData.push({ waktu, suhu: parseFloat(suhu), kelembaban: parseFloat(kelembaban), cahaya: parseFloat(cahaya) });
+  if (dummyData.length > 20) dummyData.shift(); // Max 20 data
+  updateChart();
+}
+
+updateChart();
+setInterval(simulateRealtime, 1000);
 </script>
 
 <script>
-  // Menu hamburger
   const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
+  const navLinks = document.querySelector('.nav-links');
+
   hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('show');
   });
