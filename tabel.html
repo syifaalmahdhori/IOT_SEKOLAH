@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabel Sensor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="logo_ss.png" type="image/png">
+</head>
+<body>
+<section class="header">
+  <div class="header-content">
+    <img src="logo_ss.png" alt="Logo" class="logo" />
+    <div class="title">Realtime Sensor</div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Realtime</a>
+      <a href="grafik.html">Grafik</a>
+      <a href="tabel.html" class="active">Tabel</a>
+    </nav>
+  </div>
+</section>
+
+<br>
+<h2>Riwayat Data Sensor</h2>
+
+<form class="filter-form">
+  <label for="tanggal">Filter Tanggal:</label>
+  <input type="date" name="tanggal" id="tanggal">
+  <button type="submit">Tampilkan</button>
+  <a href="export_excel.html" class="export-btn" title="Export ke Excel">
+    <i class="fas fa-file-excel"></i>
+  </a>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Waktu</th>
+      <th>Suhu</th>
+      <th>Kelembaban</th>
+      <th>Cahaya</th>
+      <th>Status Pintu</th>
+    </tr>
+  </thead>
+  <tbody id="sensor-body">
+    <tr>
+      <td>1</td>
+      <td>2025-07-20 10:30:00</td>
+      <td>27.5 °C</td>
+      <td>65%</td>
+      <td>80%</td>
+      <td>Tertutup</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2025-07-20 10:31:00</td>
+      <td>27.7 °C</td>
+      <td>64%</td>
+      <td>78%</td>
+      <td>Terbuka</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>2025-07-20 10:32:00</td>
+      <td>27.6 °C</td>
+      <td>63%</td>
+      <td>79%</td>
+      <td>Tertutup</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>2025-07-20 10:33:00</td>
+      <td>27.8 °C</td>
+      <td>62%</td>
+      <td>77%</td>
+      <td>Terbuka</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>2025-07-20 10:34:00</td>
+      <td>27.9 °C</td>
+      <td>61%</td>
+      <td>76%</td>
+      <td>Tertutup</td>
+    </tr>
+    <!-- Tambahkan lebih banyak baris jika perlu -->
+  </tbody>
+</table>
+
+<div class="pagination">
+  <a href="#">Prev</a>
+  <a class="active">1</a>
+  <a href="#">Next</a>
+</div>
+
+<script>
+// Hamburger toggle menu
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('show');
+});
+</script>
+
+</body>
+</html>

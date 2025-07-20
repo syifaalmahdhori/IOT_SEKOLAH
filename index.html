@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard Realtime</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" href="logo_ss.png" type="image/png" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+<section class="header">
+  <div class="header-content">
+    <img src="logo_ss.png" alt="Logo" class="logo" />
+    <div class="title">Realtime Sensor</div>
+    <button 
+      class="hamburger" 
+      id="hamburger" 
+      aria-label="Toggle menu" 
+      aria-controls="navLinks" 
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" class="active">Realtime</a>
+      <a href="grafik.html">Grafik</a>
+      <a href="tabel.html">Tabel</a>
+    </nav>
+  </div>
+</section>
+
+<br />
+<h2>Data Sensor Realtime</h2>
+<div class="container">
+  <div class="card">
+    <div class="label">🌡️ Suhu</div>
+    <div class="value" id="suhu">--</div>
+    <div class="status" id="status_suhu">--</div>
+  </div>
+  <div class="card">
+    <div class="label">💧 Kelembaban</div>
+    <div class="value" id="kelembaban">--</div>
+    <div class="status" id="status_kelembaban">--</div>
+  </div>
+  <div class="card">
+    <div class="label">🔆 Cahaya</div>
+    <div class="value" id="cahaya">--</div>
+    <div class="status" id="status_cahaya">--</div>
+  </div>
+  <div class="card">
+    <div class="label">🚪 Status Pintu</div>
+    <div class="value" id="status_pintu">--</div>
+  </div>
+</div>
+
+<p id="update-terakhir">Update terakhir: <span id="waktu_terakhir">--</span></p>
+
+<script>
+// Contoh data dummy untuk simulasi
+const dummyData = [
+  {
+    waktu: "14:01:00",
+    suhu: 27.5,
+    kelembaban: 65,
+    cahaya: 80,
+    status_suhu: "Normal",
+    status_kelembaban: "Baik",
+    status_cahaya: "Terang",
+    status_pintu: "Tertutup"
+  },
+  {
+    waktu: "14:01:01",
+    suhu: 27.6,
+    kelembaban: 64,
+    cahaya: 82,
+    status_suhu: "Normal",
+    status_kelembaban: "Baik",
+    status_cahaya: "Terang",
+    status_pintu: "Tertutup"
+  },
+  {
+    waktu: "14:01:02",
+    suhu: 27.7,
+    kelembaban: 63,
+    cahaya: 83,
+    status_suhu: "Normal",
+    status_kelembaban: "Baik",
+    status_cahaya: "Terang",
+    status_pintu: "Terbuka"
+  }
+];
+
+let index = 0;
+function updateSensorData() {
+  const latest = dummyData[index % dummyData.length];
+  document.getElementById("suhu").textContent = latest.suhu + " °C";
+  document.getElementById("kelembaban").textContent = latest.kelembaban + " %";
+  document.getElementById("cahaya").textContent = latest.cahaya + " %";
+  document.getElementById("status_suhu").textContent = latest.status_suhu;
+  document.getElementById("status_kelembaban").textContent = latest.status_kelembaban;
+  document.getElementById("status_cahaya").textContent = latest.status_cahaya;
+  document.getElementById("status_pintu").textContent = latest.status_pintu;
+  document.getElementById("waktu_terakhir").textContent = latest.waktu;
+  index++;
+}
+
+setInterval(updateSensorData, 1000);
+updateSensorData();
+
+// Toggle Hamburger Menu
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+  hamburger.setAttribute('aria-expanded', !isExpanded);
+  navLinks.classList.toggle('show');
+});
+</script>
+</body>
+</html>

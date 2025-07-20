@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Grafik Sensor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" href="logo_ss.png" type="image/png">
+  <style>
+    .chart-container {
+      max-width: 900px;
+      margin: 1rem auto 3rem;
+      padding: 0 1rem;
+    }
+  </style>
+</head>
+<body>
+<section class="header">
+  <div class="header-content">
+    <img src="logo_ss.png" alt="Logo" class="logo" />
+    <div class="title">Realtime Sensor</div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Realtime</a>
+      <a href="grafik.html" class="active">Grafik</a>
+      <a href="tabel.html">Tabel</a>
+    </nav>
+  </div>
+</section>
+
+<br>
+<h2 style="text-align:center;">Grafik Data Sensor</h2>
+
+<div class="chart-container">
+  <canvas id="sensorChart"></canvas>
+</div>
+
+<script>
+  // Data dummy 10 terakhir
+  const dummyData = [
+    { waktu: "14:00", suhu: 27.5, kelembaban: 65, cahaya: 80 },
+    { waktu: "14:01", suhu: 27.6, kelembaban: 64, cahaya: 79 },
+    { waktu: "14:02", suhu: 27.8, kelembaban: 63, cahaya: 78 },
+    { waktu: "14:03", suhu: 27.9, kelembaban: 62, cahaya: 77 },
+    { waktu: "14:04", suhu: 28.0, kelembaban: 61, cahaya: 76 },
+    { waktu: "14:05", suhu: 28.2, kelembaban: 60, cahaya: 75 },
+    { waktu: "14:06", suhu: 28.3, kelembaban: 59, cahaya: 74 },
+    { waktu: "14:07", suhu: 28.4, kelembaban: 58, cahaya: 73 },
+    { waktu: "14:08", suhu: 28.5, kelembaban: 57, cahaya: 72 },
+    { waktu: "14:09", suhu: 28.6, kelembaban: 56, cahaya: 71 }
+  ];
+
+  const labels = dummyData.map(d => d.waktu);
+  const suhu = dummyData.map(d => d.suhu);
+  const kelembaban = dummyData.map(d => d.kelembaban);
+  const cahaya = dummyData.map(d => d.cahaya);
+
+  const ctx = document.getElementById('sensorChart').getContext('2d');
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Suhu (°C)', data: suhu, borderColor: 'red', fill: false, tension: 0.1 },
+        { label: 'Kelembaban (%)', data: kelembaban, borderColor: 'green', fill: false, tension: 0.1 },
+        { label: 'Cahaya (%)', data: cahaya, borderColor: 'blue', fill: false, tension: 0.1 }
+      ]
+    },
+    options: {
+      responsive: true,
+      animation: false,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Waktu'
+          }
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  // Menu hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+  });
+</script>
+
+</body>
+</html>
